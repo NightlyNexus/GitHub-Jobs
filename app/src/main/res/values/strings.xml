@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">GitHub Jobs</string>
+    <string name="full_time_only">Full-Time Only</string>
+    <string name="job_description">Job Description</string>
+    <string name="location">Location</string>
+    <string name="search_now">Search Now</string>
+    <string name="share">Share</string>
+    <string name="share_link">Share Link&#8230;</string>
+    <string name="just_now">Just Now</string>
+    <string name="loading_more">Loading More Jobs</string>
+    <string name="try_again">Failed to Load.\nTry Again</string>
+
+</resources>
