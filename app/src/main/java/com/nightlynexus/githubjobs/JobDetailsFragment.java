@@ -99,7 +99,7 @@ public class JobDetailsFragment extends Fragment {
 
     private void setAbColorSafe(final int color) {
         final int actionBarColor = - Math.abs(color % Color.BLACK);
-        if (actionBarColor > Color.rgb(20, 20, 20) && actionBarColor < Color.rgb(241, 241, 241)) {
+        if (actionBarColor > Color.rgb(35, 35, 35) && actionBarColor < Color.rgb(241, 241, 241)) {
             getActivity().getActionBar().setBackgroundDrawable(new ColorDrawable(actionBarColor));
         }
     }
