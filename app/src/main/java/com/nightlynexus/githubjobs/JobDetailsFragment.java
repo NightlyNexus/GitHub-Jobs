@@ -2,14 +2,11 @@ package com.nightlynexus.githubjobs;
 
 import android.app.Fragment;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.graphics.Palette;
-import android.support.v7.graphics.PaletteItem;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.ShareActionProvider;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,10 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
-import android.widget.ShareActionProvider;
-
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 public class JobDetailsFragment extends Fragment {
 
@@ -29,7 +22,6 @@ public class JobDetailsFragment extends Fragment {
     private WebView mWebViewHowToApply;
     private WebView mWebViewDescription;
     private Job mJob;
-    private Target mTarget; // keep global so target doesn't get garbage collected
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,59 +48,16 @@ public class JobDetailsFragment extends Fragment {
     }
 
     private void setupActionBar() {
-        getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
+        ((ActionBarActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getActivity().setTitle(mJob.getTitle());
-        mTarget = new Target() {
-
-            @Override
-            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                if (isDetached()) return;
-                getActivity().getActionBar().setIcon(new BitmapDrawable(getResources(), bitmap));
-                Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
-
-                    @Override
-                    public void onGenerated(Palette palette) {
-                        if (isDetached()) return;
-                        final PaletteItem pi = palette.getLightVibrantColor();
-                        if (pi == null) setCrazyActionBarColor();
-                        else setAbColorSafe(pi.getRgb());
-                    }
-                });
-            }
-
-            @Override
-            public void onBitmapFailed(Drawable drawable) {
-                if (isDetached()) return;
-                setCrazyActionBarColor();
-            }
-
-            @Override
-            public void onPrepareLoad(Drawable drawable) {
-                if (isDetached()) return;
-            }
-        };
-        getActivity().getActionBar().setIcon(android.R.color.transparent);
-        if (mJob.getCompanyLogo() == null) setCrazyActionBarColor();
-        else Picasso.with(getActivity()).load(mJob.getCompanyLogo()).into(mTarget);
-    }
-
-    private void setCrazyActionBarColor() {
-        final int crazyCode = mJob.getTitle().hashCode();
-        setAbColorSafe(crazyCode);
-    }
-
-    private void setAbColorSafe(final int color) {
-        final int actionBarColor = - Math.abs(color % Color.BLACK);
-        if (actionBarColor > Color.rgb(35, 35, 35) && actionBarColor < Color.rgb(241, 241, 241)) {
-            getActivity().getActionBar().setBackgroundDrawable(new ColorDrawable(actionBarColor));
-        }
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
         menuInflater.inflate(R.menu.job_details, menu);
         MenuItem menuItem = menu.findItem(R.id.action_share);
-        final ShareActionProvider shareActionProvider = (ShareActionProvider) menuItem.getActionProvider();
+        ShareActionProvider shareActionProvider = (ShareActionProvider)
+                MenuItemCompat.getActionProvider(menuItem);
         shareActionProvider.setShareIntent(getShareIntent());
     }
 
@@ -125,7 +74,11 @@ public class JobDetailsFragment extends Fragment {
     private Intent getShareIntent() {
         final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
         intent.setType("text/plain");
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
+        } else {
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+        }
         intent.putExtra(Intent.EXTRA_SUBJECT, mJob.getTitle());
         intent.putExtra(Intent.EXTRA_TEXT, mJob.getUrl());
         return intent;

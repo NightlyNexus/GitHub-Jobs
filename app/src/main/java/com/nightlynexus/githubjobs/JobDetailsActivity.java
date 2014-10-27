@@ -1,10 +1,10 @@
 package com.nightlynexus.githubjobs;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 
-public class JobDetailsActivity extends Activity {
+public class JobDetailsActivity extends ActionBarActivity {
 
     public static final String EXTRA_JOB = "EXTRA_JOB";
 

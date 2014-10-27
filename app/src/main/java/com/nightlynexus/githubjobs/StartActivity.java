@@ -1,9 +1,9 @@
 package com.nightlynexus.githubjobs;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 
-public class StartActivity extends Activity {
+public class StartActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

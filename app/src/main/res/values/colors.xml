@@ -2,6 +2,9 @@
 <resources>
 
     <color name="jobs">#2B7FC3</color>
+    <color name="jobs_dark">#0B5FA3</color>
     <color name="cyan">#006064</color>
+    <color name="green">@android:color/holo_green_light</color>
+    <color name="orange">@android:color/holo_orange_dark</color>
 
 </resources>
