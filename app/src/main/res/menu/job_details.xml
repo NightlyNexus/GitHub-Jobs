@@ -2,12 +2,12 @@
 
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:xkcd="http://schemas.android.com/apk/res-auto">
+    xmlns:jobs="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/action_share"
         android:title="@string/action_share"
-        xkcd:showAsAction="ifRoom"
-        xkcd:actionProviderClass="android.support.v7.widget.ShareActionProvider"/>
+        jobs:showAsAction="ifRoom"
+        jobs:actionProviderClass="android.support.v7.widget.ShareActionProvider"/>
 
 </menu>
