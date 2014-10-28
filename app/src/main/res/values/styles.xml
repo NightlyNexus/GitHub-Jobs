@@ -6,6 +6,7 @@
     </style>
 
     <style name="StartTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/jobs</item>
         <item name="colorPrimaryDark">@color/jobs_dark</item>
         <item name="colorAccent">@color/green</item>
     </style>

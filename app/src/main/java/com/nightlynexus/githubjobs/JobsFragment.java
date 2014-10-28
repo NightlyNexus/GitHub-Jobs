@@ -211,6 +211,7 @@ public class JobsFragment extends Fragment {
         @Override
         public void failure(RetrofitError retrofitError) {
             if (isDetached()) return;
+            mDepleted = true;
             stopFetching();
             Toast.makeText(getActivity(), R.string.try_again, Toast.LENGTH_SHORT).show();
         }
