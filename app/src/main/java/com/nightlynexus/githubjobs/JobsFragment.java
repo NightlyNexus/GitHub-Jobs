@@ -115,9 +115,14 @@ public class JobsFragment extends Fragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 final Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(mJobsList.get(position).getCompanyUrl()));
-                startActivity(intent);
-                return true;
+                final String companyUrl = mJobsList.get(position).getCompanyUrl();
+                if (companyUrl != null) {
+                    intent.setData(Uri.parse(companyUrl));
+                    startActivity(intent);
+                    return true;
+                } else {
+                    return false;
+                }
             }
         });
         final TextView.OnEditorActionListener onEditorActionListener = new TextView.OnEditorActionListener() {
