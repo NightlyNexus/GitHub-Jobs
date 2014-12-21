@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.ShareActionProvider;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -36,8 +37,13 @@ public class JobDetailsFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.fragment_job_details, container, false);
         mWebViewHowToApply = (WebView) rootView.findViewById(R.id.web_view_how_to_apply);
         mWebViewDescription = (WebView) rootView.findViewById(R.id.web_view_description);
-        mWebViewHowToApply.loadData(mJob.getHowToApply(), "text/html", "UTF-8");
-        mWebViewDescription.loadData(mJob.getDescription(), "text/html", "UTF-8");
+
+        String howto64 = Base64.encodeToString(mJob.getHowToApply().getBytes(), Base64.DEFAULT);
+        mWebViewHowToApply.loadData(howto64, "text/html; charset=utf-8", "base64");
+
+        String descr64 = Base64.encodeToString(mJob.getDescription().getBytes(), Base64.DEFAULT);
+        mWebViewDescription.loadData(descr64, "text/html; charset=utf-8", "base64");
+
         return rootView;
     }
 
